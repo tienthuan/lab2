@@ -13,19 +13,19 @@ void merge(char arr1[][MAX_CHAR], char arr2[][MAX_CHAR], int n1,int n2, char arr
     }
     while (i < n1)
         strcpy(arr3[k++],arr1[i++]);
- 
-    // Store remaining elements of second array
     while (j < n2)
         strcpy(arr3[k++],arr2[j++]);
 }
 int delete(char arr[][MAX_CHAR], int pos,int n){
     int c;
+    pos++;
     if (pos < 0 || pos > n){
         return 0;
     }
     for ( c = pos - 1 ; c < n - 1 ; c++ ) {
         strcpy(arr[c],arr[c+1]);        
     }
+    memset(arr[n-1],'\0',sizeof(arr[n-1]));
     return 1;
 }
 
@@ -44,6 +44,7 @@ void concatenate(char arr[][MAX_CHAR], int n){
             strcat(arr[i],arr[i+1] + 3);
             delete(arr, i + 1, n);
             i--;
+            n--;
         }
     }
 }
@@ -67,30 +68,15 @@ int main(){
     int n3 = n1 + n2;
     char arr3[n3][MAX_CHAR];
     merge(arr1,arr2,n1,n2,arr3);
+    for(int i = 0; i < n3; i ++){
+      printf("%s",arr3[i]);
+    }
     
-    /*delete(arr3,4,n3);
-    printf("%s","after deletion\n");*/
+    printf("after deletion :\n");
     concatenate(arr3,n3);
     for(int i = 0; i < n3; i ++){
       printf("%s",arr3[i]);
     }
-
-    char ID[10];
-    char ID2[10];
-    memset(ID,'\0',sizeof(ID));
-    memset(ID2,'\0',sizeof(ID));
-    //strncpy(ID,strtok(arr3[0], " "));
-    strncpy(ID,arr3[0],2);
-    strncpy(ID2,arr3[1],2);
-    printf("%s,%s\n",ID,ID2);
-    printf("%i\n",strcmp(ID,ID2));
-
-
-    //concatenate beta
-    strtok(arr3[0],"\n");
-    strcat(arr3[0],", ");
-    strcat(arr3[0],arr3[1] + 3);
-    printf("%s",arr3[0]);
     
     /*part 1: scanf the 2 files, put each one in their respective array
     merge 2 arr into arr3(merge already have sort alphabetically)
